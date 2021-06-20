@@ -66,7 +66,7 @@ class MainActivityTest : TestCase() {
             )
         )
 
-        onView(withId(R.id.tv_title_detail)).check(matches(withText("Reservoir Dogs")))
+        onView(withId(R.id.tv_title_detail)).check(matches(withText("The Conjuring: The Devil Made Me Do It")))
     }
 
     @Test
@@ -79,7 +79,7 @@ class MainActivityTest : TestCase() {
             )
         )
 
-        onView(withId(R.id.tv_title_detail)).check(matches(withText("Mad About You")))
+        onView(withId(R.id.tv_title_detail)).check(matches(withText("Loki")))
     }
 
     private fun clickTabAt(index : Int) : ViewAction = object : ViewAction {

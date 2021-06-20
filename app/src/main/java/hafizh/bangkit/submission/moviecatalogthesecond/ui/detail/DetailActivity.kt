@@ -123,7 +123,7 @@ class DetailActivity : AppCompatActivity(), View.OnClickListener {
             intent.getParcelableExtra(EXTRA_DETAIL)
 
     private fun setTvShowDisplay(tvShow: TvShowResponse) {
-        with(binding) {
+        with (binding) {
             tvTitleDetail.text = tvShow.title
             tvTaglineDetail.text = getString(R.string.tagline_template, tvShow.tagline)
             tvOverviewDetail.text = tvShow.overview

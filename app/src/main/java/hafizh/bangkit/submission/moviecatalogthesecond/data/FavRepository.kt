@@ -22,8 +22,6 @@ class FavRepository(application: Application) {
     private val favDao = db.favMovieTvShowDao()
     private val executorService = Executors.newSingleThreadExecutor()
 
-    fun getAllFav() : PagingSource<Int, MovieTvShowEntity> = favDao.getAllFav()
-
     fun getSpecificFav(isMovie: Boolean) : PagingSource<Int, MovieTvShowEntity> = favDao.getSpecificFav(isMovie)
 
     fun getFavById(id: Int, isMovie: Boolean) = favDao.getFavById(id, isMovie)

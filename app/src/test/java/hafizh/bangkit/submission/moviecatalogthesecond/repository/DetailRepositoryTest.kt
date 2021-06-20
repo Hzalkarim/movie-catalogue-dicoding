@@ -1,4 +1,4 @@
-package hafizh.bangkit.submission.moviecatalogthesecond.ui.detail
+package hafizh.bangkit.submission.moviecatalogthesecond.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import hafizh.bangkit.submission.moviecatalogthesecond.data.DetailRepository

@@ -18,6 +18,7 @@ import hafizh.bangkit.submission.moviecatalogthesecond.databinding.TvShowFragmen
 import hafizh.bangkit.submission.moviecatalogthesecond.di.Injection
 import hafizh.bangkit.submission.moviecatalogthesecond.factory.MovieTvShowViewModelFactory
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.detail.DetailActivity
+import hafizh.bangkit.submission.moviecatalogthesecond.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -46,8 +47,6 @@ class TvShowFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val factory = MovieTvShowViewModelFactory.getInstance(Injection.provideMovieTvShowRepository())
-        viewModel = ViewModelProvider(this, factory )
-            .get(TvShowViewModel::class.java)
         pagingViewModel = ViewModelProvider(this, factory)[TvShowPagingViewModel::class.java]
     }
 
@@ -57,7 +56,10 @@ class TvShowFragment : Fragment() {
         initPagingAdapter()
 
         viewLifecycleOwner.lifecycleScope.launch {
+            EspressoIdlingResource.increment()
             pagingViewModel.tvShows.collectLatest {
+                if (!EspressoIdlingResource.idlingResource.isIdleNow)
+                    EspressoIdlingResource.decrement()
                 tvShowAdapter.submitData(it)
             }
         }

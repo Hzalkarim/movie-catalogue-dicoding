@@ -18,12 +18,12 @@ import hafizh.bangkit.submission.moviecatalogthesecond.databinding.MovieFragment
 import hafizh.bangkit.submission.moviecatalogthesecond.di.Injection
 import hafizh.bangkit.submission.moviecatalogthesecond.factory.MovieTvShowViewModelFactory
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.detail.DetailActivity
+import hafizh.bangkit.submission.moviecatalogthesecond.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MovieFragment : Fragment() {
 
-    private lateinit var viewModel: MovieViewModel
     private lateinit var pagingViewModel: MoviePagingViewModel
     private var _binding: MovieFragmentBinding? = null
     private val binding get() = _binding
@@ -44,8 +44,6 @@ class MovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, MovieTvShowViewModelFactory.getInstance(Injection.provideMovieTvShowRepository()))
-            .get(MovieViewModel::class.java)
         pagingViewModel = ViewModelProvider(this, MovieTvShowViewModelFactory.getInstance(Injection.provideMovieTvShowRepository()))
             .get(MoviePagingViewModel::class.java)
     }
@@ -56,7 +54,10 @@ class MovieFragment : Fragment() {
         initPagingAdapter()
 
         viewLifecycleOwner.lifecycleScope.launch {
+            EspressoIdlingResource.increment()
             pagingViewModel.movies.collectLatest {
+                if (!EspressoIdlingResource.idlingResource.isIdleNow)
+                    EspressoIdlingResource.decrement()
                 movAdapter.submitData(it)
             }
         }
