@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
@@ -57,15 +58,6 @@ class MainActivityTest : TestCase() {
         onView(withId(R.id.tv_display_fav)).check(matches(withText(R.string.display_tvshow_fav)))
     }
 
-    private fun atStartToFavTvShow() {
-        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
-        onView(withId(R.id.menu_fav)).perform(click())
-    }
-
-    private fun atStartToFavMovie() {
-        onView(withId(R.id.menu_fav)).perform(click())
-    }
-
     @Test
     fun testClickFirstMovieItem_gotoDetailActivity_checkTitleIsDisplayed() {
         onView(withId(R.id.rv_movie)).perform(
@@ -113,16 +105,6 @@ class MainActivityTest : TestCase() {
     }
 
     @Test
-    fun testMovieFav_isEmpty_byFailingToClick() {
-        atStartToFavMovie()
-        onView(withId(R.id.rv_movietv_fav)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                click()
-            )
-        ).withFailureHandler { e, _ -> assert(e is NullPointerException) }
-    }
-
-    @Test
     fun testAddFirstTvShowToFav_atZeroFav_checkAddFavButtonChange() {
         onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
         onView(withId(R.id.rv_tvshow)).perform(
@@ -148,14 +130,13 @@ class MainActivityTest : TestCase() {
         onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.add_fav)))
     }
 
-    @Test
-    fun testTvShowFav_isEmpty_byFailingToClick() {
-        atStartToFavTvShow()
-        onView(withId(R.id.rv_movietv_fav)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                click()
-            )
-        ).withFailureHandler { e, _ -> assert(e is NullPointerException) }
+    private fun atStartToFavTvShow() {
+        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
+        onView(withId(R.id.menu_fav)).perform(click())
+    }
+
+    private fun atStartToFavMovie() {
+        onView(withId(R.id.menu_fav)).perform(click())
     }
 
     private fun clickTabAt(index : Int) : ViewAction = object : ViewAction {

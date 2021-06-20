@@ -63,7 +63,7 @@ class FavRepositoryDatabaseTest : TestCase() {
     fun test_insert_tvShow_and_then_getFavById_validInput() {
         val movieEntity = MovieTvShowEntity(uid = "1", id = 1, title = "Satu", isMovie = false)
         favDao.insert(movieEntity)
-        val getValue = favDao.getFavById(1, true).blockingGet()
+        val getValue = favDao.getFavById(1, false).blockingGet()
 
         assertEquals(movieEntity, getValue)
     }
