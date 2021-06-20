@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">MovieCatalogTheSecond</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Facit enim ille duo seiuncta ultima bonorum, quae ut essent vera, coniungi debuerunt; Quid enim me prohiberet Epicureum esse, si probarem, quae ille diceret? Non minor, inquit, voluptas percipitur ex vilissimis rebus quam ex pretiosissimis. Si autem id non concedatur, non continuo vita beata tollitur.
+Duo Reges: constructio interrete. Quae diligentissime contra Aristonem dicuntur a Chryippo. Honesta oratio, Socratica, Platonis etiam. Sed tamen est aliquid, quod nobis non liceat, liceat illis. At miser, si in flagitiosa et vitiosa vita afflueret voluptatibus. Audax negotium, dicerem impudens, nisi hoc institutum postea translatum ad philosophos nostros esset. Id mihi magnum videtur.
+    </string>
+    <string name="popularity_label">Popularity: %1$s</string>
+    <string name="tagline_template">"%1$s"</string>
+    <string name="contdesc_film_poster">Film Poster</string>
+    <string name="favorite">Favorite</string>
+    <string name="add_fav">Add Favorite</string>
+    <string name="del_fav">Remove Favorite</string>
+
+    <string name="no_data">No Data</string>
+    <string name="movie">Movie</string>
+    <string name="tv_show">Tv Show</string>
+</resources>
