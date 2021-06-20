@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import hafizh.bangkit.submission.moviecatalogthesecond.R
 import hafizh.bangkit.submission.moviecatalogthesecond.adapter.FavPagingAdapter
 import hafizh.bangkit.submission.moviecatalogthesecond.adapter.OnClickCallbackMovieTvItem
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.remote.response.BaseResponse
@@ -15,6 +16,7 @@ import hafizh.bangkit.submission.moviecatalogthesecond.databinding.ActivityFavBi
 import hafizh.bangkit.submission.moviecatalogthesecond.di.Injection
 import hafizh.bangkit.submission.moviecatalogthesecond.factory.FavViewModelFactory
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.detail.DetailActivity
+import hafizh.bangkit.submission.moviecatalogthesecond.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -33,7 +35,7 @@ class FavActivity : AppCompatActivity(), OnClickCallbackMovieTvItem {
 
 
         val isMovie = getExtraIsMovie()
-        supportActionBar?.title = if (isMovie) "My Fav Movie" else "My Fav Tv Show"
+        binding.tvDisplayFav.text = if (isMovie) getString(R.string.display_movie_fav) else getString(R.string.display_tvshow_fav)
         val factory = FavViewModelFactory.getInstance(Injection.provideFavRepository(application))
         favViewModel = ViewModelProvider(this, factory)[FavViewModel::class.java]
 
@@ -46,12 +48,18 @@ class FavActivity : AppCompatActivity(), OnClickCallbackMovieTvItem {
         tvShowFavPagingAdapter.setOnClickCallback(this)
 
         lifecycleScope.launch {
+            EspressoIdlingResource.increment()
             favViewModel.movieFav.collectLatest {
+                if (!EspressoIdlingResource.idlingResource.isIdleNow)
+                    EspressoIdlingResource.decrement()
                 movieFavPagingAdapter.submitData(it)
             }
         }
         lifecycleScope.launch {
+            EspressoIdlingResource.increment()
             favViewModel.tvShowFav.collectLatest {
+                if (!EspressoIdlingResource.idlingResource.isIdleNow)
+                    EspressoIdlingResource.decrement()
                 tvShowFavPagingAdapter.submitData(it)
             }
         }

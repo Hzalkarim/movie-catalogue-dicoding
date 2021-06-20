@@ -13,4 +13,7 @@ Duo Reges: constructio interrete. Quae diligentissime contra Aristonem dicuntur 
     <string name="no_data">No Data</string>
     <string name="movie">Movie</string>
     <string name="tv_show">Tv Show</string>
+
+    <string name="display_movie_fav">My Fav Movie</string>
+    <string name="display_tvshow_fav">My Fav Tv Show</string>
 </resources>
