@@ -38,10 +38,6 @@ class FavRepositoryDatabaseTest : TestCase() {
     @After
     public override fun tearDown() { favDb.close() }
 
-    fun testGetSpecificFav() {}
-
-    fun testGetFavById() {}
-
     @Test
     fun test_insert_movie_and_then_getFavById_validInput() {
         val movieEntity = MovieTvShowEntity(uid = "1", id = 1, title = "Satu")
@@ -96,8 +92,6 @@ class FavRepositoryDatabaseTest : TestCase() {
         }
         assertEquals(null, getValue)
     }
-
-
 
     @Test
     fun test_insertMixMovieTv_then_getSpecificFav_movie() = runBlocking {

@@ -24,7 +24,6 @@ import kotlinx.coroutines.launch
 
 class TvShowFragment : Fragment() {
 
-    private lateinit var viewModel: TvShowViewModel
     private lateinit var pagingViewModel: TvShowPagingViewModel
 
     private var _binding: TvShowFragmentBinding? = null
