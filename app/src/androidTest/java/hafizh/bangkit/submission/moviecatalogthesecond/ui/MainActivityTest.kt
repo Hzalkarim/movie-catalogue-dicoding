@@ -7,7 +7,7 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
@@ -46,40 +46,51 @@ class MainActivityTest : TestCase() {
     }
 
     @Test
+    fun testGoToFavActivity_fromMovieFragment_checkDisplayTitle() {
+        onView(withId(R.id.menu_fav)).perform(click())
+        onView(withId(R.id.tv_display_fav)).check(matches(withText(R.string.display_movie_fav)))
+    }
+
+    @Test
+    fun testGoToFavActivity_fromTvShowFragment_checkDisplayTitle() {
+        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
+        onView(withId(R.id.menu_fav)).perform(click())
+        onView(withId(R.id.tv_display_fav)).check(matches(withText(R.string.display_tvshow_fav)))
+    }
+
+    @Test
     fun testClickFirstMovieItem_gotoDetailActivity_isInDetailActivityByCheckingPoster() {
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                ViewActions.click()
+                click()
             )
         )
-
         onView(withId(R.id.img_poster_detail)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testClickFirstMovieItem_gotoDetailActivity_checkTitle() {
+    fun testClickFirstMovieItem_gotoDetailActivity_checkTitleIsDisplayed() {
         onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                ViewActions.click()
+                click()
             )
         )
-
-        onView(withId(R.id.tv_title_detail)).check(matches(withText("The Conjuring: The Devil Made Me Do It")))
+        onView(withId(R.id.tv_title_detail)).check(matches(isDisplayed()))
     }
 
     @Test
-    fun testClickFirstTvShowItem_gotoDetailActivity_checkTitle() {
+    fun testClickFirstTvShowItem_gotoDetailActivity_checkTitleIsDisplayed() {
         onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
         onView(withId(R.id.rv_tvshow)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tvshow)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                ViewActions.click()
+                click()
             )
         )
 
-        onView(withId(R.id.tv_title_detail)).check(matches(withText("Loki")))
+        onView(withId(R.id.tv_title_detail)).check(matches(isDisplayed()))
     }
 
     private fun clickTabAt(index : Int) : ViewAction = object : ViewAction {
