@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.PerformException
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions.click
@@ -47,31 +48,18 @@ class MainActivityTest : TestCase() {
 
     @Test
     fun testGoToFavActivity_fromMovieFragment_checkDisplayTitle() {
-        onView(withId(R.id.menu_fav)).perform(click())
+        atStartToFavMovie()
         onView(withId(R.id.tv_display_fav)).check(matches(withText(R.string.display_movie_fav)))
     }
 
     @Test
     fun testGoToFavActivity_fromTvShowFragment_checkDisplayTitle() {
-        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
-        onView(withId(R.id.menu_fav)).perform(click())
+        atStartToFavTvShow()
         onView(withId(R.id.tv_display_fav)).check(matches(withText(R.string.display_tvshow_fav)))
     }
 
     @Test
-    fun testClickFirstMovieItem_gotoDetailActivity_isInDetailActivityByCheckingPoster() {
-        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
-        onView(withId(R.id.rv_movie)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
-                click()
-            )
-        )
-        onView(withId(R.id.img_poster_detail)).check(matches(isDisplayed()))
-    }
-
-    @Test
     fun testClickFirstMovieItem_gotoDetailActivity_checkTitleIsDisplayed() {
-        onView(withId(R.id.rv_movie)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_movie)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
                 click()
@@ -83,14 +71,72 @@ class MainActivityTest : TestCase() {
     @Test
     fun testClickFirstTvShowItem_gotoDetailActivity_checkTitleIsDisplayed() {
         onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
-        onView(withId(R.id.rv_tvshow)).check(matches(isDisplayed()))
         onView(withId(R.id.rv_tvshow)).perform(
             RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
                 click()
             )
         )
-
         onView(withId(R.id.tv_title_detail)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun testAddFirstMovieToFav_atZeroFav_checkAddFavButtonChange() {
+        onView(withId(R.id.rv_movie)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.add_fav)))
+        onView(withId(R.id.btn_fav_control_detail)).perform(click())
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.del_fav)))
+    }
+
+    @Test
+    fun testRemoveMovieFav_from_favActivity_checkRemoveFavButtonChange() {
+        atStartToFavMovie()
+        onView(withId(R.id.rv_movietv_fav)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.del_fav)))
+        onView(withId(R.id.btn_fav_control_detail)).perform(click())
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.add_fav)))
+    }
+
+    @Test
+    fun testAddFirstTvShowToFav_atZeroFav_checkAddFavButtonChange() {
+        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
+        onView(withId(R.id.rv_tvshow)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.add_fav)))
+        onView(withId(R.id.btn_fav_control_detail)).perform(click())
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.del_fav)))
+    }
+
+    @Test
+    fun testRemoveTvShowFav_from_favActivity_checkRemoveFavButtonChange() {
+        atStartToFavTvShow()
+        onView(withId(R.id.rv_movietv_fav)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0,
+                click()
+            )
+        )
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.del_fav)))
+        onView(withId(R.id.btn_fav_control_detail)).perform(click())
+        onView(withId(R.id.btn_fav_control_detail)).check(matches(withText(R.string.add_fav)))
+    }
+
+    private fun atStartToFavTvShow() {
+        onView(withId(R.id.tablayout_movietv)).perform(clickTabAt(1))
+        onView(withId(R.id.menu_fav)).perform(click())
+    }
+
+    private fun atStartToFavMovie() {
+        onView(withId(R.id.menu_fav)).perform(click())
     }
 
     private fun clickTabAt(index : Int) : ViewAction = object : ViewAction {

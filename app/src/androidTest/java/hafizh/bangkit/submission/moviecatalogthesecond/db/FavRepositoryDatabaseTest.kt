@@ -38,10 +38,6 @@ class FavRepositoryDatabaseTest : TestCase() {
     @After
     public override fun tearDown() { favDb.close() }
 
-    fun testGetSpecificFav() {}
-
-    fun testGetFavById() {}
-
     @Test
     fun test_insert_movie_and_then_getFavById_validInput() {
         val movieEntity = MovieTvShowEntity(uid = "1", id = 1, title = "Satu")
@@ -67,7 +63,7 @@ class FavRepositoryDatabaseTest : TestCase() {
     fun test_insert_tvShow_and_then_getFavById_validInput() {
         val movieEntity = MovieTvShowEntity(uid = "1", id = 1, title = "Satu", isMovie = false)
         favDao.insert(movieEntity)
-        val getValue = favDao.getFavById(1, true).blockingGet()
+        val getValue = favDao.getFavById(1, false).blockingGet()
 
         assertEquals(movieEntity, getValue)
     }
@@ -96,8 +92,6 @@ class FavRepositoryDatabaseTest : TestCase() {
         }
         assertEquals(null, getValue)
     }
-
-
 
     @Test
     fun test_insertMixMovieTv_then_getSpecificFav_movie() = runBlocking {

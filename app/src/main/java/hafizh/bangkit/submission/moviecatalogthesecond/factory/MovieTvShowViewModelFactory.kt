@@ -7,9 +7,7 @@ import hafizh.bangkit.submission.moviecatalogthesecond.data.source.MoviePagingSo
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.TvShowPagingSource
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.remote.ApiConfig
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.movie.MoviePagingViewModel
-import hafizh.bangkit.submission.moviecatalogthesecond.ui.movie.MovieViewModel
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.tvshow.TvShowPagingViewModel
-import hafizh.bangkit.submission.moviecatalogthesecond.ui.tvshow.TvShowViewModel
 
 class MovieTvShowViewModelFactory (private val repository: MovieTvShowRepository) : ViewModelProvider.Factory {
 
@@ -27,10 +25,6 @@ class MovieTvShowViewModelFactory (private val repository: MovieTvShowRepository
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
-            modelClass.isAssignableFrom(MovieViewModel::class.java) ->
-                MovieViewModel(repository) as T
-            modelClass.isAssignableFrom(TvShowViewModel::class.java) ->
-                TvShowViewModel(repository) as T
             modelClass.isAssignableFrom(MoviePagingViewModel::class.java) ->{
                 val pagingSource = MoviePagingSource(ApiConfig.getApiService())
                 MoviePagingViewModel(pagingSource) as T
