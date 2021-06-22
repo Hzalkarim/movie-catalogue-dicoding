@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.rxjava3.EmptyResultSetException
 import androidx.test.core.app.ApplicationProvider
 import hafizh.bangkit.submission.moviecatalogthesecond.data.FavRepository
+import hafizh.bangkit.submission.moviecatalogthesecond.data.source.FavDataSource
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.local.entity.MovieTvShowEntity
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.local.room.FavMovieTvShowDao
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.local.room.FavMovieTvShowRoomDatabase
@@ -24,15 +25,12 @@ class FavRepositoryDatabaseTest : TestCase() {
     private lateinit var favDb : FavMovieTvShowRoomDatabase
     private lateinit var favDao: FavMovieTvShowDao
 
-    private lateinit var favRepo : FavRepository
-
     @Before
     public override fun setUp() {
         super.setUp()
         val context = ApplicationProvider.getApplicationContext<Context>()
         favDb = Room.inMemoryDatabaseBuilder(context, FavMovieTvShowRoomDatabase::class.java).build()
         favDao = favDb.favMovieTvShowDao()
-        favRepo = FavRepository(application = context as Application)
     }
 
     @After
