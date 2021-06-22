@@ -44,6 +44,4 @@ class FavViewModel(private val favRepository: FavRepository) : ViewModel() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(consumer, Throwable::printStackTrace)
     }
-
-
 }

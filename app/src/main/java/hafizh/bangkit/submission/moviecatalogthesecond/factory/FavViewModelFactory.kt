@@ -3,6 +3,7 @@ package hafizh.bangkit.submission.moviecatalogthesecond.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import hafizh.bangkit.submission.moviecatalogthesecond.data.FavRepository
+import hafizh.bangkit.submission.moviecatalogthesecond.data.source.FavDataSource
 import hafizh.bangkit.submission.moviecatalogthesecond.ui.fav.FavViewModel
 
 class FavViewModelFactory(private val favRepository: FavRepository) : ViewModelProvider.Factory {

@@ -3,6 +3,7 @@ package hafizh.bangkit.submission.moviecatalogthesecond.di
 import android.app.Application
 import hafizh.bangkit.submission.moviecatalogthesecond.data.DetailRepository
 import hafizh.bangkit.submission.moviecatalogthesecond.data.FavRepository
+import hafizh.bangkit.submission.moviecatalogthesecond.data.source.FavDataSource
 import hafizh.bangkit.submission.moviecatalogthesecond.data.MovieTvShowRepository
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.DetailDataSource
 import hafizh.bangkit.submission.moviecatalogthesecond.data.source.RemoteDataSource
@@ -22,5 +23,9 @@ object Injection {
         return DetailRepository.getInstance(dataSource)
     }
 
-    fun provideFavRepository(application: Application) = FavRepository.getInstance(application)
+    fun provideFavRepository(application: Application) : FavRepository {
+        val dataSource = FavDataSource.getInstance(application)
+
+        return FavRepository.getInstance(dataSource.dao)
+    }
 }
